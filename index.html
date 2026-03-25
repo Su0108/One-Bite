@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>One Bite – Mandal Bite Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400&family=Dancing+Script:wght@600;700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+:root{
+  --green:#0b3d2e;--green2:#1f7a5a;
+  --bg:#f0f0f0;--bg2:#e8e8e8;--white:#fff;
+  --text:#111;--text2:#555;
+  --shadow:0 8px 32px rgba(11,61,46,.15);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:"Nunito",sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+img{display:block;max-width:100%;}
+.m-deco{position:absolute;pointer-events:none;z-index:0;opacity:.08;}
+
+/* ── NAVBAR ── */
+#navbar{
+  position:fixed;top:0;left:0;right:0;z-index:9000;
+  background:rgba(240,240,240,.97);backdrop-filter:blur(14px);
+  height:60px;padding:0 40px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid rgba(11,61,46,.1);
+  box-shadow:0 2px 16px rgba(11,61,46,.08);
+}
+.nav-logo{font-family:"Dancing Script",cursive;font-size:1.9rem;font-weight:700;color:var(--green);}
+.nav-logo span{color:var(--green2);}
+.nav-links{display:flex;gap:22px;list-style:none;align-items:center;}
+.nav-links>li>a{font-weight:700;font-size:.88rem;color:var(--text);padding:4px 0;position:relative;transition:color .2s;}
+.nav-links>li>a::after{content:"";position:absolute;bottom:-2px;left:0;width:0;height:2px;background:var(--green2);border-radius:2px;transition:width .3s;}
+.nav-links>li>a:hover,.nav-links>li>a.active{color:var(--green);}
+.nav-links>li>a:hover::after,.nav-links>li>a.active::after{width:100%;}
+.has-drop{position:relative;}
+.drop-menu{display:none;position:absolute;top:44px;left:0;background:var(--white);border-radius:14px;box-shadow:var(--shadow);min-width:150px;overflow:hidden;z-index:9001;}
+.has-drop:hover .drop-menu{display:block;}
+.drop-menu a{display:block;padding:11px 18px;font-weight:600;font-size:.87rem;color:var(--text);transition:background .15s;}
+.drop-menu a:hover{background:var(--bg);color:var(--green);}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px;}
+.nav-toggle span{display:block;width:24px;height:2.5px;background:var(--green);border-radius:2px;transition:all .3s;}
+
+/* ── SHARED ── */
+section{position:relative;overflow:hidden;}
+.sec-title{font-family:"Cormorant Garamond",serif;font-size:2.8rem;font-weight:700;line-height:1.1;margin-bottom:28px;}
+.sec-title .script{font-family:"Dancing Script",cursive;color:var(--green2);font-size:3.2rem;}
+.sec-title .accent{color:var(--green2);}
+
+/* ── HERO BUTTONS ── */
+.hbtn{display:inline-block;font-family:"Nunito",sans-serif;font-size:1rem;font-weight:700;border-radius:50px;padding:12px 34px;cursor:pointer;transition:all .25s;text-align:center;border:2.5px solid #1a4a2e;}
+.hbtn-solid{background:#1a4a2e;color:#fff;}
+.hbtn-solid:hover{background:#2d6e45;border-color:#2d6e45;transform:translateY(-2px);box-shadow:0 6px 20px rgba(11,61,46,.3);}
+.hbtn-outline{background:transparent;color:#1a4a2e;}
+.hbtn-outline:hover{background:#1a4a2e;color:#fff;transform:translateY(-2px);}
+.hbtn-wide{display:block;padding:12px 0;text-align:center;background:#1a4a2e;color:#fff;}
+.hbtn-wide:hover{background:#2d6e45;border-color:#2d6e45;transform:translateY(-2px);box-shadow:0 6px 20px rgba(11,61,46,.3);}
+
+/* ── HERO — KEY FIX: no min-height, just padding ── */
+#home{
+  padding:80px 48px 56px;
+  display:flex;align-items:center;
+  background:var(--bg);
+}
+.hero-inner{display:flex;align-items:center;gap:40px;width:100%;position:relative;z-index:1;}
+.hero-left{flex:1;min-width:0;}
+.hero-eyebrow{font-size:.75rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--green2);margin-bottom:10px;}
+.hero-title{font-family:"Cormorant Garamond",serif;font-size:3.6rem;font-weight:700;line-height:1.1;margin-bottom:14px;}
+.hero-title .script{font-family:"Dancing Script",cursive;color:var(--green2);font-size:4rem;display:block;}
+.hero-sub{font-size:1rem;color:var(--text2);line-height:1.7;font-style:italic;max-width:420px;margin-bottom:24px;}
+.hero-btns{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:12px;}
+.hero-right{flex:0 0 400px;display:flex;justify-content:center;align-items:center;}
+.thali-img{width:380px;height:380px;border-radius:50%;object-fit:cover;
+  box-shadow:0 0 0 10px rgba(11,61,46,.07),0 0 0 20px rgba(11,61,46,.04),0 24px 50px rgba(11,61,46,.2);
+  animation:float 5s ease-in-out infinite;position:relative;z-index:1;}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+
+/* ── STORY ── */
+#story{padding:52px 48px;background:var(--bg);}
+.story-inner{display:flex;align-items:center;gap:52px;position:relative;z-index:1;}
+.story-plate{flex:0 0 300px;width:300px;height:300px;border-radius:50%;object-fit:cover;
+  box-shadow:0 0 0 8px rgba(11,61,46,.06),0 0 0 16px rgba(11,61,46,.03),0 18px 40px rgba(11,61,46,.14);}
+.story-text p{font-family:"Dancing Script",cursive;font-size:1.25rem;color:var(--green);line-height:1.9;margin-bottom:14px;max-width:480px;}
+
+/* ── MENU ── */
+#menu{padding:52px 48px;background:var(--bg2);}
+.menu-tabs{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;}
+.tab-btn{padding:9px 26px;border-radius:50px;font-family:"Nunito",sans-serif;font-size:.9rem;font-weight:700;border:2px solid var(--green);background:transparent;color:var(--green);cursor:pointer;transition:all .2s;}
+.tab-btn.active{background:var(--green);color:#fff;box-shadow:0 4px 14px rgba(11,61,46,.2);}
+.tab-btn:hover:not(.active){background:rgba(11,61,46,.07);}
+.menu-panel{display:none;animation:fadeUp .3s ease;}
+.menu-panel.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.menu-table{width:100%;border-collapse:collapse;}
+.menu-table thead tr{border-bottom:2.5px solid var(--green);}
+.menu-table thead th{padding:8px 14px 12px;text-align:left;font-size:.87rem;font-weight:800;text-decoration:underline;}
+.menu-table thead th:last-child{text-align:right;}
+.menu-table tbody tr{border-bottom:1px solid rgba(11,61,46,.1);transition:background .15s;}
+.menu-table tbody tr:hover{background:rgba(11,61,46,.04);}
+.menu-table tbody tr:last-child{border-bottom:none;}
+.menu-table td{padding:13px 14px;font-size:.95rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.4px;}
+.menu-table td:last-child{text-align:right;font-weight:800;}
+
+/* ── OTHER DETAILS ── */
+#wifi{padding:52px 48px;background:var(--bg);}
+#wifi .sec-title{text-align:center;}
+.details-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:860px;margin:0 auto;position:relative;z-index:1;}
+.detail-card{background:var(--green);border-radius:20px;padding:42px 22px 32px;text-align:center;color:#fff;transition:transform .3s,box-shadow .3s;box-shadow:var(--shadow);position:relative;overflow:hidden;}
+.detail-card::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.06),transparent);}
+.detail-card:hover{transform:translateY(-6px);box-shadow:0 18px 44px rgba(11,61,46,.32);}
+.detail-icon{font-size:2.8rem;margin-bottom:18px;display:block;position:relative;z-index:1;}
+.detail-btn{display:inline-block;border:2.5px solid rgba(255,255,255,.85);border-radius:50px;padding:9px 20px;font-size:.88rem;font-weight:700;color:#fff;cursor:pointer;background:transparent;font-family:"Nunito",sans-serif;margin-bottom:14px;transition:all .2s;position:relative;z-index:1;}
+.detail-btn:hover{background:#fff;color:var(--green);}
+.detail-desc{font-size:.94rem;font-weight:600;line-height:1.5;opacity:.9;position:relative;z-index:1;}
+
+/* ── CONTACT ── */
+#contact{padding:52px 48px;background:var(--green);color:#fff;}
+#contact .sec-title{color:#fff;}
+#contact .sec-title .accent{color:#7dd4a8;}
+.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;position:relative;z-index:1;}
+.contact-block h3{font-size:.74rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;opacity:.6;margin-bottom:12px;}
+.c-line{width:42px;height:3px;background:rgba(255,255,255,.3);border-radius:2px;margin-bottom:14px;}
+.contact-block p,.contact-block a{color:#fff;font-size:.96rem;line-height:1.8;font-weight:500;}
+.contact-block a:hover{text-decoration:underline;}
+.contact-actions{display:flex;gap:10px;flex-wrap:wrap;}
+.contact-actions a{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:50px;font-weight:700;font-size:.88rem;font-family:"Nunito",sans-serif;border:2px solid rgba(255,255,255,.5);color:#fff;background:transparent;transition:all .25s;}
+.contact-actions a:hover{background:rgba(255,255,255,.15);border-color:#fff;transform:translateY(-2px);}
+.wa-btn{background:#25d366!important;border-color:#25d366!important;}
+.wa-btn:hover{background:#1ebe5a!important;border-color:#1ebe5a!important;}
+.social-row{display:flex;gap:10px;flex-wrap:wrap;}
+.social-link{width:42px;height:42px;border-radius:50%;border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;transition:all .25s;}
+.social-link:hover{background:rgba(255,255,255,.2);border-color:#fff;transform:translateY(-3px);}
+.social-link.fb:hover{background:#1877f2;border-color:#1877f2;}
+.social-link.ig:hover{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);border-color:transparent;}
+.social-link.em:hover{background:#ea4335;border-color:#ea4335;}
+.social-link.map:hover{background:#4285f4;border-color:#4285f4;}
+
+/* ── FOOTER ── */
+footer{
+  background:#061f18;color:rgba(255,255,255,.5);
+  text-align:center;padding:22px 20px;font-size:.86rem;
+  line-height:1.8;
+}
+footer strong{color:#7dd4a8;}
+footer .heart{color:#e25555;}
+
+/* ── OVERLAYS ── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:99000;align-items:flex-start;justify-content:center;backdrop-filter:blur(5px);padding:14px;overflow-y:auto;}
+.overlay.open{display:flex!important;}
+@keyframes popIn{from{transform:scale(.88);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-x{position:absolute;top:12px;right:14px;background:var(--bg2);border:none;border-radius:50%;width:36px;height:36px;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text);transition:all .2s;z-index:10;}
+.modal-x:hover{background:var(--green);color:#fff;}
+
+/* Gallery */
+.gallery-modal{background:#fff;border-radius:22px;padding:36px 28px 40px;width:100%;max-width:900px;margin:auto;position:relative;box-shadow:0 28px 70px rgba(0,0,0,.3);animation:popIn .3s cubic-bezier(.175,.885,.32,1.275);}
+.gallery-modal h2{font-family:"Cormorant Garamond",serif;font-size:2.1rem;font-weight:700;color:var(--green);margin-bottom:22px;}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.g-card{border-radius:12px;overflow:hidden;aspect-ratio:4/3;cursor:pointer;transition:all .3s;}
+.g-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s;}
+.g-card:hover img{transform:scale(1.07);}
+.g-card:hover{box-shadow:0 10px 28px rgba(11,61,46,.28);}
+
+/* Book Table */
+.book-modal{background:#fff;border-radius:22px;width:100%;max-width:620px;margin:auto;overflow:hidden;box-shadow:0 28px 70px rgba(0,0,0,.3);animation:popIn .3s cubic-bezier(.175,.885,.32,1.275);}
+.book-head{background:var(--green);padding:28px 36px 24px;text-align:center;color:#fff;position:relative;}
+.book-head h2{font-family:"Cormorant Garamond",serif;font-size:2rem;font-weight:700;margin-bottom:4px;}
+.book-head p{opacity:.75;font-size:.88rem;}
+.book-body{padding:28px 36px 36px;}
+.fgroup{margin-bottom:16px;}
+.fgroup label{display:block;font-size:.76rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--green);margin-bottom:6px;}
+.finput{width:100%;padding:11px 13px;border-radius:10px;border:2px solid rgba(11,61,46,.15);font-family:"Nunito",sans-serif;font-size:.95rem;font-weight:600;color:var(--text);background:var(--bg);outline:none;transition:border-color .2s;}
+.finput:focus{border-color:var(--green2);}
+.frow{display:flex;gap:14px;}
+.frow .fgroup{flex:1;}
+.wa-note{background:rgba(37,211,102,.1);border:1.5px solid rgba(37,211,102,.35);border-radius:10px;padding:10px 13px;display:flex;align-items:center;gap:8px;font-size:.83rem;font-weight:600;color:#1a5c2a;margin-bottom:18px;}
+.send-btn{width:100%;background:#25d366;color:#fff;padding:13px;border-radius:50px;font-family:"Nunito",sans-serif;font-size:.97rem;font-weight:800;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .25s;box-shadow:0 5px 18px rgba(37,211,102,.4);}
+.send-btn:hover{background:#1ebe5a;transform:translateY(-2px);}
+
+/* WiFi */
+.wifi-modal{background:#fff;border-radius:20px;padding:40px;text-align:center;max-width:340px;width:92%;margin:auto;box-shadow:0 22px 55px rgba(0,0,0,.25);animation:popIn .3s cubic-bezier(.175,.885,.32,1.275);}
+.wifi-modal h3{font-family:"Cormorant Garamond",serif;font-size:1.85rem;color:var(--green);margin-bottom:6px;}
+.wifi-pass{font-size:2.5rem;font-weight:800;color:var(--green);letter-spacing:9px;margin:14px 0;background:var(--bg);border-radius:11px;padding:14px 8px;}
+.close-btn{background:var(--green);color:#fff;border:none;border-radius:50px;padding:11px 36px;font-size:.94rem;font-weight:700;cursor:pointer;font-family:"Nunito",sans-serif;transition:all .2s;}
+.close-btn:hover{background:var(--green2);transform:translateY(-1px);}
+
+/* Toast */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--green);color:#fff;padding:12px 28px;border-radius:50px;font-weight:700;font-size:.92rem;z-index:999999;pointer-events:none;box-shadow:0 7px 26px rgba(11,61,46,.4);transition:transform .4s cubic-bezier(.175,.885,.32,1.275);white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* ── RESPONSIVE TABLET ── */
+@media(max-width:860px){
+  #navbar{padding:0 16px;height:56px;}
+  .nav-logo{font-size:1.7rem;}
+  .nav-links{
+    display:none;flex-direction:column;
+    position:fixed;top:56px;left:0;right:0;
+    background:rgba(240,240,240,.99);
+    padding:6px 0 14px;gap:0;
+    border-bottom:2px solid rgba(11,61,46,.12);
+    z-index:8999;box-shadow:0 8px 24px rgba(0,0,0,.12);
+  }
+  .nav-links.open{display:flex;}
+  .nav-links>li{width:100%;}
+  .nav-links>li>a{display:block;padding:12px 22px;font-size:.95rem;border-bottom:1px solid rgba(11,61,46,.06);}
+  .nav-links>li:last-child>a{border-bottom:none;}
+  .has-drop .drop-menu{display:block;position:static;box-shadow:none;background:rgba(11,61,46,.04);border:none;border-radius:0;padding-left:0;}
+  .has-drop .drop-menu a{padding:10px 34px;font-size:.88rem;border-bottom:1px solid rgba(11,61,46,.05);}
+  .nav-toggle{display:flex;}
+
+  /* Hero gap fix on mobile */
+  #home{padding:66px 18px 36px;}
+  .hero-inner{flex-direction:column;gap:20px;text-align:center;}
+  .hero-left{width:100%;}
+  .hero-sub{margin:0 auto 20px;}
+  .hero-btns{justify-content:center;}
+  .hero-right{flex:unset;width:100%;}
+  .thali-img{width:230px;height:230px;}
+  .hero-title{font-size:2.4rem;}
+  .hero-title .script{font-size:2.8rem;}
+  .hbtn-wide{max-width:260px;margin:0 auto;}
+
+  #story{padding:36px 18px;}
+  .story-inner{flex-direction:column;gap:20px;text-align:center;}
+  .story-plate{flex:unset;width:190px;height:190px;}
+  .story-text p{text-align:left;}
+  #menu{padding:36px 18px;}
+  .menu-tabs{gap:8px;}
+  .tab-btn{padding:8px 16px;font-size:.82rem;}
+  #wifi{padding:36px 18px;}
+  .details-grid{grid-template-columns:1fr;max-width:320px;}
+  #contact{padding:36px 18px;}
+  .contact-grid{grid-template-columns:1fr;gap:24px;}
+  .sec-title{font-size:2rem;}
+  .sec-title .script{font-size:2.4rem;}
+  .m-deco{display:none;}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);}
+  .gallery-modal{padding:32px 14px 36px;}
+  .book-head,.book-body{padding:22px 18px;}
+  .frow{flex-direction:column;gap:0;}
+  .toast{white-space:normal;text-align:center;max-width:88%;font-size:.83rem;padding:10px 16px;}
+}
+@media(max-width:420px){
+  .thali-img{width:180px;height:180px;}
+  .gallery-grid{grid-template-columns:1fr;}
+  .wifi-pass{font-size:2rem;letter-spacing:6px;}
+  .hbtn{padding:11px 24px;font-size:.92rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#home" class="nav-logo">Que <span>Bite</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home" class="active" onclick="closeNav()">Home</a></li>
+    <li class="has-drop">
+      <a href="#menu" onclick="closeNav()">Menu &#9662;</a>
+      <div class="drop-menu">
+        <a href="#menu" onclick="switchTab('bev');closeNav()"><i class="fa-solid fa-mug-hot" style="margin-right:8px;color:var(--green2)"></i>Beverages</a>
+        <a href="#menu" onclick="switchTab('veg');closeNav()"><i class="fa-solid fa-leaf" style="margin-right:8px;color:var(--green2)"></i>Veg</a>
+        <a href="#menu" onclick="switchTab('nonveg');closeNav()"><i class="fa-solid fa-drumstick-bite" style="margin-right:8px;color:var(--green2)"></i>Non Veg</a>
+      </div>
+    </li>
+    <li><a href="#" onclick="openBooking();closeNav();return false;">Book Table</a></li>
+    <li><a href="#" onclick="openGallery();closeNav();return false;">Gallery</a></li>
+    <li><a href="#wifi" onclick="closeNav()">WiFi</a></li>
+    <li><a href="#contact" onclick="closeNav()">Contact</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <img class="m-deco" src="images/image_01.png" style="width:300px;top:-80px;right:-60px;transform:rotate(15deg);filter:invert(1) sepia(1) saturate(4) hue-rotate(90deg);" alt=""/>
+  <img class="m-deco" src="images/image_01.png" style="width:180px;bottom:-50px;left:-40px;transform:rotate(-20deg);filter:invert(1) sepia(1) saturate(4) hue-rotate(90deg);" alt=""/>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <p class="hero-eyebrow">&#10022; One Bite &#10022;</p>
+      <h1 class="hero-title">Welcome To<span class="script">One Bite</span></h1>
+      <p class="hero-sub">Every Bite Tells a Story &#8212; authentic flavours, warm hospitality, and memories that last a lifetime.</p>
+      <div class="hero-btns">
+        <a href="#menu" class="hbtn hbtn-solid">View Menu</a>
+        <a href="#" onclick="openBooking();return false;" class="hbtn hbtn-outline">Book Table</a>
+      </div>
+      <div style="margin-top:12px;max-width:282px;">
+        <a href="#contact" class="hbtn hbtn-solid hbtn-wide">Contact Us</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img class="thali-img" src="images/image_02.png" alt="Indian Thali"/>
+    </div>
+  </div>
+</section>
+
+<!-- OUR STORY -->
+<section id="story">
+  <img class="m-deco" src="images/image_01.png" style="width:260px;bottom:-60px;right:-50px;transform:rotate(30deg);filter:invert(1) sepia(1) saturate(4) hue-rotate(90deg);" alt=""/>
+  <div class="story-inner">
+    <img class="story-plate" src="images/image_02.png" alt="Our Food"/>
+    <div class="story-text">
+      <h2 class="sec-title">Our <span class="script">Story</span></h2>
+      <p>Welcome to Mandal Bite Hub &#8212; where delicious food meets warm hospitality. Every meal is prepared fresh with hand&#8209;picked ingredients, traditional recipes, and a whole lot of love.</p>
+      <p>Enjoy a cozy, memorable dining experience with family and friends in an atmosphere that feels like home.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <h2 class="sec-title">Our <span class="accent">Menu</span></h2>
+  <div class="menu-tabs">
+    <button class="tab-btn active" onclick="switchTab('bev')"><i class="fa-solid fa-mug-hot"></i> Beverages</button>
+    <button class="tab-btn" onclick="switchTab('veg')"><i class="fa-solid fa-leaf"></i> Veg</button>
+    <button class="tab-btn" onclick="switchTab('nonveg')"><i class="fa-solid fa-drumstick-bite"></i> Non Veg</button>
+  </div>
+  <div class="menu-panel active" id="panel-bev">
+    <table class="menu-table">
+      <thead><tr><th>Name</th><th>Price</th></tr></thead>
+      <tbody>
+        <tr><td>1. Tea</td><td>&#8377; 20/-</td></tr>
+        <tr><td>2. Coffee</td><td>&#8377; 30/-</td></tr>
+        <tr><td>3. Hot Chocolate</td><td>&#8377; 60/-</td></tr>
+        <tr><td>4. Lemonade</td><td>&#8377; 40/-</td></tr>
+        <tr><td>5. Soft Drink</td><td>&#8377; 50/-</td></tr>
+        <tr><td>6. Juice</td><td>&#8377; 70/-</td></tr>
+        <tr><td>7. Milkshake</td><td>&#8377; 90/-</td></tr>
+        <tr><td>8. Smoothie</td><td>&#8377; 110/-</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="menu-panel" id="panel-veg">
+    <table class="menu-table">
+      <thead><tr><th>Name</th><th>Price</th></tr></thead>
+      <tbody>
+        <tr><td>1. Paneer Butter Masala</td><td>&#8377; 160/-</td></tr>
+        <tr><td>2. Mix Vegetable Curry</td><td>&#8377; 120/-</td></tr>
+        <tr><td>3. Aloo Gobi</td><td>&#8377; 110/-</td></tr>
+        <tr><td>4. Chana Masala</td><td>&#8377; 100/-</td></tr>
+        <tr><td>5. Rice</td><td>&#8377; 60/-</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="menu-panel" id="panel-nonveg">
+    <table class="menu-table">
+      <thead><tr><th>Name</th><th>Price</th></tr></thead>
+      <tbody>
+        <tr><td>1. Chicken Curry</td><td>&#8377; 180/-</td></tr>
+        <tr><td>2. Butter Chicken</td><td>&#8377; 200/-</td></tr>
+        <tr><td>3. Mutton Masala</td><td>&#8377; 220/-</td></tr>
+        <tr><td>4. Egg Curry</td><td>&#8377; 100/-</td></tr>
+        <tr><td>5. Fish Fry</td><td>&#8377; 160/-</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- OTHER DETAILS -->
+<section id="wifi">
+  <img class="m-deco" src="images/image_01.png" style="width:240px;top:-50px;left:-44px;filter:invert(1) sepia(1) saturate(4) hue-rotate(90deg);" alt=""/>
+  <img class="m-deco" src="images/image_01.png" style="width:240px;bottom:-44px;right:-44px;transform:rotate(45deg);filter:invert(1) sepia(1) saturate(4) hue-rotate(90deg);" alt=""/>
+  <h2 class="sec-title" style="text-align:center;">Other <span class="script">Details</span></h2>
+  <div class="details-grid">
+    <div class="detail-card">
+      <span class="detail-icon"><i class="fa-solid fa-wifi"></i></span>
+      <button class="detail-btn" onclick="openWifi()">Get Password</button>
+      <p class="detail-desc">Free Wi-Fi<br>Available</p>
+    </div>
+    <div class="detail-card">
+      <span class="detail-icon"><i class="fa-regular fa-image"></i></span>
+      <button class="detail-btn" onclick="openGallery()">View Gallery</button>
+      <p class="detail-desc">View Our<br>Restaurant Online</p>
+    </div>
+    <div class="detail-card">
+      <span class="detail-icon"><i class="fa-solid fa-globe"></i></span>
+      <a href="https://www.mandaleditz.online" target="_blank" class="detail-btn">View Website</a>
+      <p class="detail-desc">Visit Our<br>Website</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <h2 class="sec-title">Contact <span class="accent">Details</span></h2>
+  <div class="contact-grid">
+    <div class="contact-block">
+      <h3><i class="fa-solid fa-phone"></i>&nbsp; Get In Touch</h3>
+      <div class="c-line"></div>
+      <div class="contact-actions">
+        <a href="tel:8101347299"><i class="fa-solid fa-phone"></i> Call Us</a>
+        <a href="https://wa.me/919083787933" target="_blank" class="wa-btn"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+      </div>
+    </div>
+    <div class="contact-block">
+      <h3><i class="fa-regular fa-clock"></i>&nbsp; Opening Hours</h3>
+      <div class="c-line"></div>
+      <p><i class="fa-regular fa-calendar"></i>&nbsp; Sunday &#8211; Saturday</p>
+      <p style="margin-top:5px;"><i class="fa-regular fa-clock"></i>&nbsp; 7:00 AM &#8211; 8:30 PM</p>
+    </div>
+    <div class="contact-block">
+      <h3><i class="fa-solid fa-share-nodes"></i>&nbsp; Follow Us</h3>
+      <div class="c-line"></div>
+      <div class="social-row">
+        <a href="https://www.facebook.com/share/1bcyZaVHbd/" target="_blank" class="social-link fb"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/editwithsubhadip" target="_blank" class="social-link ig"><i class="fa-brands fa-instagram"></i></a>
+        <a href="/cdn-cgi/l/email-protection#f89599969c99949d9c918c82b89f95999194d69b9795" class="social-link em"><i class="fa-solid fa-envelope"></i></a>
+        <a href="https://g.page/r/CbyT3Y52B-CnECk/review." target="_blank" class="social-link map"><i class="fa-brands fa-google"></i></a>
+      </div>
+      <p style="margin-top:12px;font-size:.86rem;opacity:.7;"><i class="fa-solid fa-envelope" style="margin-right:5px;"></i><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ee838f808a8f828b8a879a94ae89838f8782c08d8183">[email&#160;protected]</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Web Designed by &mdash; <strong>Subhadip Mandal</strong></p>
+  <p style="margin-top:4px;">Made with <span class="heart">&#10084;&#65039;</span> in India</p>
+</footer>
+
+<!-- GALLERY MODAL -->
+<div class="overlay" id="galleryOverlay">
+  <div class="gallery-modal">
+    <button class="modal-x" onclick="closeGallery()"><i class="fa-solid fa-xmark"></i></button>
+    <h2>Gallery</h2>
+    <div class="gallery-grid">
+      <div class="g-card"><img src="images/image_03.jpg" alt="Restaurant 1"/></div>
+      <div class="g-card"><img src="images/image_04.jpg" alt="Restaurant 2"/></div>
+      <div class="g-card"><img src="images/image_03.jpg" alt="Restaurant 3"/></div>
+      <div class="g-card"><img src="images/image_05.jpg" alt="Restaurant 4"/></div>
+      <div class="g-card"><img src="images/image_06.jpg" alt="Restaurant 5"/></div>
+      <div class="g-card"><img src="images/image_03.jpg" alt="Restaurant 6"/></div>
+    </div>
+  </div>
+</div>
+
+<!-- BOOK TABLE MODAL -->
+<div class="overlay" id="bookOverlay">
+  <div class="book-modal">
+    <div class="book-head">
+      <button class="modal-x" onclick="closeBooking()" style="background:rgba(255,255,255,.15);color:#fff;"><i class="fa-solid fa-xmark"></i></button>
+      <h2>Book a Table</h2>
+      <p>Fill details &mdash; we'll confirm your reservation!</p>
+    </div>
+    <div class="book-body">
+      <div class="fgroup"><label>Your Name *</label><input class="finput" type="text" id="bk-name" placeholder="Enter your full name"/></div>
+      <div class="frow">
+        <div class="fgroup"><label>Date &amp; Time *</label><input class="finput" type="datetime-local" id="bk-dt"/></div>
+        <div class="fgroup"><label>Mobile *</label><input class="finput" type="tel" id="bk-ph" placeholder="+91 XXXXX XXXXX"/></div>
+      </div>
+      <div class="fgroup"><label>Guests</label><input class="finput" type="number" id="bk-guests" placeholder="e.g. 2" min="1" max="50"/></div>
+      <div class="fgroup" style="margin-bottom:16px;"><label>Special Message</label><input class="finput" type="text" id="bk-msg" placeholder="Any special requests?"/></div>
+      <div class="wa-note"><i class="fa-brands fa-whatsapp" style="font-size:1.3rem;color:#25d366;flex-shrink:0;"></i>Booking details sent via WhatsApp to restaurant.</div>
+      <button class="send-btn" onclick="sendBooking()"><i class="fa-brands fa-whatsapp" style="font-size:1.1rem;"></i>Send Booking via WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<!-- WIFI MODAL -->
+<div class="overlay" id="wifiOverlay">
+  <div class="wifi-modal">
+    <h3><i class="fa-solid fa-wifi" style="color:var(--green2);margin-right:7px;"></i>Free Wi-Fi</h3>
+    <p style="font-size:.85rem;color:var(--text2);margin-top:9px;">Network Name</p>
+    <div style="font-size:1.2rem;font-weight:800;color:var(--green);margin:5px 0;">OneBite_Guest</div>
+    <p style="font-size:.85rem;color:var(--text2);margin-top:13px;">Password</p>
+    <div class="wifi-pass">1234</div>
+    <p style="font-size:.83rem;color:var(--text2);margin-bottom:20px;">Enjoy your meal &amp; stay connected! &#128522;</p>
+    <button class="close-btn" onclick="closeWifi()">Close</button>
+  </div>
+</div>
+
+<div class="toast" id="toastEl"></div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+function switchTab(tab){
+  ['bev','veg','nonveg'].forEach((t,i)=>{
+    document.querySelectorAll('.tab-btn')[i].classList.toggle('active',t===tab);
+  });
+  document.querySelectorAll('.menu-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+tab).classList.add('active');
+  document.getElementById('menu').scrollIntoView({behavior:'smooth'});
+}
+function openOverlay(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
+function closeOverlay(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
+function openGallery(){openOverlay('galleryOverlay');}
+function closeGallery(){closeOverlay('galleryOverlay');}
+function openBooking(){openOverlay('bookOverlay');}
+function closeBooking(){closeOverlay('bookOverlay');}
+function openWifi(){openOverlay('wifiOverlay');}
+function closeWifi(){closeOverlay('wifiOverlay');}
+['galleryOverlay','bookOverlay','wifiOverlay'].forEach(id=>{
+  document.getElementById(id).addEventListener('click',function(e){if(e.target===this)closeOverlay(id);});
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')['galleryOverlay','bookOverlay','wifiOverlay'].forEach(closeOverlay);});
+function sendBooking(){
+  const name=document.getElementById('bk-name').value.trim();
+  const dt=document.getElementById('bk-dt').value;
+  const ph=document.getElementById('bk-ph').value.trim();
+  const guests=document.getElementById('bk-guests').value.trim();
+  const msg=document.getElementById('bk-msg').value.trim();
+  if(!name){showToast('Please enter your name!');return;}
+  if(!dt){showToast('Please select date & time!');return;}
+  if(!ph||ph.length<6){showToast('Please enter mobile number!');return;}
+  const d=new Date(dt);
+  const ds=d.toLocaleString('en-IN',{day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:true});
+  const m='🍽️ *Table Booking – One Bite*\n\n👤 *Name:* '+name+'\n📅 *Date & Time:* '+ds+'\n📞 *Mobile:* '+ph+(guests?'\n👥 *Guests:* '+guests:'')+(msg?'\n💬 *Message:* '+msg:'')+'\n\n_Booking via One Bite website_';
+  window.open('https://wa.me/919083787933?text='+encodeURIComponent(m),'_blank');
+  showToast('Opening WhatsApp with your booking!');
+  ['bk-name','bk-dt','bk-ph','bk-guests','bk-msg'].forEach(id=>document.getElementById(id).value='');
+  setTimeout(closeBooking,1200);
+}
+function toggleNav(){document.getElementById('navLinks').classList.toggle('open');}
+function closeNav(){document.getElementById('navLinks').classList.remove('open');}
+document.addEventListener('click',e=>{
+  const nav=document.getElementById('navLinks');
+  const toggle=document.getElementById('navToggle');
+  if(nav.classList.contains('open')&&!nav.contains(e.target)&&!toggle.contains(e.target))closeNav();
+});
+function showToast(msg){
+  const el=document.getElementById('toastEl');
+  el.textContent=msg;el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),3400);
+}
+window.addEventListener('scroll',()
